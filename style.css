@@ -2,7 +2,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 .hero-bg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/ROBOTIC-ARM.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('ROBOTIC-ARM.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -39,4 +39,5 @@ body {
     object-fit: cover;     /* crop neatly without stretching */
     border-radius: 0.5rem;
 }
+
 
