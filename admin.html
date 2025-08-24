@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Mechatronics Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <div id="admin-panel" class="min-h-screen hidden">
+        <!-- Admin Header -->
+        <header class="bg-gray-800 text-white shadow-lg">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+                <nav class="space-x-4 flex items-center">
+                    <a href="admin.html" class="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold">Dashboard</a>
+                    <a href="messages.html" class="hover:bg-gray-700 px-4 py-2 rounded-md">Messages</a>
+                    <a href="manage.html" class="hover:bg-gray-700 px-4 py-2 rounded-md">Manage Content</a>
+                    <button id="logout-button" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md">Logout</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto p-6">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Add Publication Card -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2 flex items-center space-x-2">
+                        <i data-feather="file-plus"></i>
+                        <span>Add New Publication</span>
+                    </h2>
+                    <form id="publication-form">
+                        <div class="mb-4">
+                            <label for="pub-title" class="block text-gray-700 font-medium mb-2">Title</label>
+                            <input type="text" id="pub-title" class="w-full px-4 py-2 border rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="pub-authors" class="block text-gray-700 font-medium mb-2">Authors</label>
+                            <input type="text" id="pub-authors" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Sarma, A., Das, S." required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="pub-journal" class="block text-gray-700 font-medium mb-2">Journal / Conference</label>
+                            <input type="text" id="pub-journal" class="w-full px-4 py-2 border rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="pub-year" class="block text-gray-700 font-medium mb-2">Year</label>
+                            <input type="number" id="pub-year" class="w-full px-4 py-2 border rounded-lg bg-white" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">Add Publication</button>
+                        <p id="pub-status" class="mt-4 text-center"></p>
+                    </form>
+                </div>
+
+                <!-- Add Student Resource Card -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2 flex items-center space-x-2">
+                        <i data-feather="upload-cloud"></i>
+                        <span>Upload to Students' Corner</span>
+                    </h2>
+                    <form id="resource-form">
+                        <div class="mb-4">
+                            <label for="res-title" class="block text-gray-700 font-medium mb-2">Title</label>
+                            <input type="text" id="res-title" class="w-full px-4 py-2 border rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="res-desc" class="block text-gray-700 font-medium mb-2">Description</label>
+                            <input type="text" id="res-desc" class="w-full px-4 py-2 border rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Resource Type</label>
+                            <select id="res-type" class="w-full px-4 py-2 border rounded-lg">
+                                <option value="notice">Notice Only</option>
+                                <option value="file">File (PDF, Doc, etc.)</option>
+                                <option value="link">Link</option>
+                            </select>
+                        </div>
+                        <div id="file-upload-section" class="mb-4 hidden">
+                            <label for="res-file" class="block text-gray-700 font-medium mb-2">Upload File</label>
+                            <input type="file" id="res-file" class="w-full">
+                        </div>
+                        <div id="link-upload-section" class="mb-4 hidden">
+                            <label for="res-link" class="block text-gray-700 font-medium mb-2">Paste Link URL</label>
+                            <input type="url" id="res-link" class="w-full px-4 py-2 border rounded-lg" placeholder="https://example.com">
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg">Add Resource</button>
+                        <p id="res-status" class="mt-4 text-center"></p>
+                    </form>
+                </div>
+                
+                <!-- Add Research Area Card -->
+                <div class="bg-white p-8 rounded-lg shadow-md lg:col-span-2">
+                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2 flex items-center space-x-2">
+                        <i data-feather="compass"></i>
+                        <span>Add New Research Area</span>
+                    </h2>
+                    <form id="research-form">
+                        <div class="mb-4">
+                            <label for="research-title" class="block text-gray-700 font-medium mb-2">Title</label>
+                            <input type="text" id="research-title" class="w-full px-4 py-2 border rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="research-desc" class="block text-gray-700 font-medium mb-2">Description</label>
+                            <textarea id="research-desc" rows="3" class="w-full px-4 py-2 border rounded-lg" required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="research-icon" class="block text-gray-700 font-medium mb-2">Feather Icon Name</label>
+                            <input type="text" id="research-icon" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., cpu, tool, users" required>
+                            <a href="https://feathericons.com/" target="_blank" class="text-sm text-blue-600 hover:underline">Find icon names here</a>
+                        </div>
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg">Add Research Area</button>
+                        <p id="research-status" class="mt-4 text-center"></p>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyAEkoTxVG1_GJnMLpD3iASw3BveRHlNQIE",
+    authDomain: "me-mechatronics-lab-website.firebaseapp.com",
+    projectId: "me-mechatronics-lab-website",
+    storageBucket: "me-mechatronics-lab-website.firebasestorage.app",
+    messagingSenderId: "876104574829",
+    appId: "1:876104574829:web:1f76814b0c1c089ca1dc64"
+  };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // --- Secure Page Access ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('admin-panel').classList.remove('hidden');
+                feather.replace();
+            } else {
+                window.location.href = './login.html';
+            }
+        });
+        
+        // --- Logout Button ---
+        const logoutButton = document.getElementById('logout-button');
+        logoutButton.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = './login.html';
+            });
+        });
+
+       // Handle Research Area Form
+        const researchForm = document.getElementById('research-form');
+        const researchStatus = document.getElementById('research-status');
+        researchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            researchStatus.textContent = 'Uploading...';
+            researchStatus.className = 'text-blue-600 mt-4 text-center';
+            try {
+                await addDoc(collection(db, "research_areas"), {
+                    title: researchForm['research-title'].value,
+                    description: researchForm['research-desc'].value,
+                    icon: researchForm['research-icon'].value
+                });
+                researchStatus.textContent = 'Research area added successfully!';
+                researchStatus.className = 'text-green-600 mt-4 text-center';
+                researchForm.reset();
+            } catch (error) {
+                researchStatus.textContent = 'Error: ' + error.message;
+                researchStatus.className = 'text-red-600 mt-4 text-center';
+            }
+        });
+
+        // Handle Publication Form
+        const pubForm = document.getElementById('publication-form');
+        const pubStatus = document.getElementById('pub-status');
+        pubForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            pubStatus.textContent = 'Uploading...';
+            pubStatus.className = 'text-blue-600 mt-4 text-center';
+            try {
+                await addDoc(collection(db, "publications"), {
+                    title: pubForm['pub-title'].value,
+                    authors: pubForm['pub-authors'].value,
+                    journal: pubForm['pub-journal'].value,
+                    year: Number(pubForm['pub-year'].value)
+                });
+                pubStatus.textContent = 'Publication added successfully!';
+                pubStatus.className = 'text-green-600 mt-4 text-center';
+                pubForm.reset();
+            } catch (error) {
+                pubStatus.textContent = 'Error: ' + error.message;
+                pubStatus.className = 'text-red-600 mt-4 text-center';
+            }
+        });
+
+        // Handle Resource Form
+        const resForm = document.getElementById('resource-form');
+        const resStatus = document.getElementById('res-status');
+        const resTypeSelect = document.getElementById('res-type');
+        const fileSection = document.getElementById('file-upload-section');
+        const linkSection = document.getElementById('link-upload-section');
+
+        resTypeSelect.addEventListener('change', (e) => {
+            fileSection.classList.add('hidden');
+            linkSection.classList.add('hidden');
+            if (e.target.value === 'file') {
+                fileSection.classList.remove('hidden');
+            } else if (e.target.value === 'link') {
+                linkSection.classList.remove('hidden');
+            }
+        });
+        
+        // Trigger change on load to set initial state
+        resTypeSelect.dispatchEvent(new Event('change'));
+
+        resForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            resStatus.textContent = 'Uploading...';
+            resStatus.className = 'text-blue-600 mt-4 text-center';
+
+            const title = resForm['res-title'].value;
+            const description = resForm['res-desc'].value;
+            const type = resForm['res-type'].value;
+            let url = null;
+
+            try {
+                if (type === 'file') {
+                    const file = resForm['res-file'].files[0];
+                    if (!file) throw new Error("Please select a file to upload.");
+                    const storageRef = ref(storage, `student_resources/${Date.now()}_${file.name}`);
+                    const snapshot = await uploadBytes(storageRef, file);
+                    url = await getDownloadURL(snapshot.ref);
+                } else if (type === 'link') {
+                    url = resForm['res-link'].value;
+                    if (!url) throw new Error("Please enter a link URL.");
+                }
+
+                await addDoc(collection(db, "student_resources"), {
+                    title, description, type, url, uploadedAt: serverTimestamp()
+                });
+
+                resStatus.textContent = 'Resource added successfully!';
+                resStatus.className = 'text-green-600 mt-4 text-center';
+                resForm.reset();
+                resTypeSelect.dispatchEvent(new Event('change'));
+
+            } catch (error) {
+                resStatus.textContent = 'Error: ' + error.message;
+                resStatus.className = 'text-red-600 mt-4 text-center';
+            }
+        });
+    </script>
+</body>
+</html>
